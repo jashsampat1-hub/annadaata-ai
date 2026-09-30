@@ -3,6 +3,7 @@
 > **Autonomous Midnight Emergency Food-Rescue Protocol & Dispatch Platform**
 > Bridging late-night wedding banquets, caterers, and bulk food donors directly with verified shelters and NGO fleets across Mumbai before surplus cooked food spoils.
 
+[![Vercel Deployment](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel)](https://annadaata-ai.vercel.app)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-jashsampat1--hub%2Fannadaata--ai-181717?logo=github)](https://github.com/jashsampat1-hub/annadaata-ai)
 [![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -10,6 +11,8 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Location](https://img.shields.io/badge/Coverage-Mumbai%20Metropolitan-emerald)](https://maps.google.com)
 [![Protocol](https://img.shields.io/badge/Protocol-Zero%20Food%20Waste-amber)](https://github.com/jashsampat1-hub/annadaata-ai)
+
+🔗 **Live Production URL:** [https://annadaata-ai.vercel.app](https://annadaata-ai.vercel.app)
 
 ---
 
