@@ -77,5 +77,5 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Participant Info
 - **Name:** Jash Sampat
-- **College ID:** [Your ID]
+- **College ID:** jashsampat1@gmail.com
 - **Day:** Day 2 (30th)
