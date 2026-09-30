@@ -1,235 +1,65 @@
-# ⚡ Annadaata AI (अन्नदाता AI)
+# Surplus Food Matcher
 
-> **Autonomous Midnight Emergency Food-Rescue Protocol & Dispatch Platform**
-> Bridging late-night wedding banquets, caterers, and bulk food donors directly with verified shelters and NGO fleets across Mumbai before surplus cooked food spoils.
+> Built for **Vibe Coding Event 2026 — Day 2 (30th)**  
+> **Problem Statement #5:** Surplus Food Matcher  
+> **Target Persona:** Food Donors (Wedding Halls / Caterers) & Shelter Coordinators  
+> **Live Demo:** [https://annadaata-ai.vercel.app](https://annadaata-ai.vercel.app)  
+> **Repository:** [https://github.com/jashsampat1-hub/annadaata-ai](https://github.com/jashsampat1-hub/annadaata-ai)
 
-[![Vercel Deployment](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel)](https://annadaata-ai.vercel.app)
-[![GitHub Repository](https://img.shields.io/badge/GitHub-jashsampat1--hub%2Fannadaata--ai-181717?logo=github)](https://github.com/jashsampat1-hub/annadaata-ai)
-[![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Location](https://img.shields.io/badge/Coverage-Mumbai%20Metropolitan-emerald)](https://maps.google.com)
-[![Protocol](https://img.shields.io/badge/Protocol-Zero%20Food%20Waste-amber)](https://github.com/jashsampat1-hub/annadaata-ai)
+## Problem & Solution
+How might we turn a donor's quick message into a clear listing with AI, and match it to the right NGO before the food spoils?
 
-🔗 **Live Production URL:** [https://annadaata-ai.vercel.app](https://annadaata-ai.vercel.app)
+Every midnight across cities like Mumbai, banquets, wedding halls, and caterers generate massive amounts of pristine cooked surplus food. Because donors are exhausted at 1:00 AM and cannot navigate complex portals, and because cooked meals spoil within 2 to 3 hours, meals are tragically discarded.
 
----
+**Annadaata AI (Surplus Food Matcher)** solves this by allowing donors to paste raw, unorganized messages (in Hinglish or English) or speak via a hands-free microphone. The system instantly extracts food type, estimated servings, pickup gate, contact info, and spoilage deadlines, calculates nearby NGO proximity via an interactive dispatch radar, and triggers a 1-click WhatsApp dispatch directly to verified response vehicles.
 
-## 🌟 The Core Problem & Vision
+### Constraint Addressed
+Cooked food stays safe for only a few hours, so each listing has a deadline and the match must happen fast.
+- Every rescue mission features a **live ticking countdown timer** with dynamic visual threat states (🟢 Safe > 2h ➔ 🟡 Warning < 2h ➔ 🔴 Critical < 45m ➔ ⚫ Expired).
+- Multi-factor NGO ranking prioritizes closest fleets with matching insulated vehicles (Electric Vans, Refrigerated Trucks) to guarantee pickup within the safe window.
 
-Every midnight across metropolitan centers like Mumbai, thousands of kilograms of pristine, freshly prepared food from grand wedding celebrations, corporate galas, and banquet halls are discarded simply because:
-1. Donors and caterers are exhausted at 1:00 AM and cannot navigate complex NGO sign-up forms.
-2. Cooked food has a perishable window of under 2 to 3 hours before bacterial spoilage sets in.
-3. NGOs and volunteer fleets lack real-time visibility into exact gate numbers, loading docks, container counts, and vehicle clearance requirements.
+## Core AI Architecture
+- **Model / Service:**
+  - **Natural Language Parsing Engine (`aiParser.ts`):** Context-aware heuristic and semantic NLP parser capable of handling rushed multi-lingual (Hinglish/English) expressions, kitchen units (handis, trays, kg, headcounts), and colloquial time references ("safe till 1:30 AM", "only 40 mins left").
+  - **Voice Capture Service (`Web Speech API`):** In-browser speech-to-text dictation using `webkitSpeechRecognition` with dynamic waveform animations for hands-free intake in busy banquet kitchens.
+  - **Geolocation & Route Service (`googleMapsService.ts`):** Geocoding, reverse geocoding, distance matrix algorithms, and Google Maps Navigation deep-link generators.
+  - **Procedural Synthesizer (`Web Audio API`):** Zero-latency browser audio synthesis for cyber radar sweeps, critical countdown alerts, and confirmation chords.
 
-**Annadaata AI** solves this with an instantaneous, low-friction emergency response system: an unformatted natural language intake engine (supporting hurried Hinglish/English text and hands-free voice dictation), intelligent food safety extraction, an interactive **Google Maps Dispatch Radar**, and **1-click WhatsApp dispatch** to verified NGO response vehicles.
+- **Workflow:**
+  1. **Intake:** Donor speaks or pastes a raw message or selects a realistic banquet preset (Kandivali Biryani Feast, BKC Pure-Veg Gala, Borivali Urgent Sangeet).
+  2. **Extraction & Classification:** The AI parser structures the raw input into diet category (`Veg`, `Non-Veg`, `Mixed`), servings count, pickup gate/dock, contact info, and safe-until deadline.
+  3. **Radar & Proximity Mapping:** Visualizes donor location against verified Mumbai shelters on an interactive concentric dispatch radar (2 km, 5 km, 10 km).
+  4. **Intelligent NGO Matching:** Evaluates shelter networks on proximity, spare capacity, dietary compatibility, and vehicle readiness.
+  5. **1-Click WhatsApp Dispatch:** Generates a prefilled, structured dispatch message with driver GPS directions, gate access details, and urgency countdown.
+  6. **Live Mission Command Board:** Tracks active rescues with live ticking timers and interactive lifecycle states (`Claimed` ➔ `Picked Up` ➔ `Delivered`).
 
----
+- **Error Handling:**
+  - **Missing Input Tolerance:** Automatically applies sensible fallback estimations if quantities or contact details are omitted.
+  - **Dietary Safety Guardrails:** Restricts non-veg food batches from ever being routed to pure-vegetarian shelters or food banks.
+  - **GPS Fallback Presets:** If browser location access is denied, smoothly falls back to verified Mumbai banquet cluster presets (Kandivali, BKC, Borivali, Andheri, Bandra, Powai, Dadar, Colaba).
+  - **Speech Error Recovery:** Catches microphone permission denials and unsupported browser environments with clear text-based fallback alerts.
 
-## 🚀 Key Modules & Capabilities
-
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                             ANNADAATA AI PIPELINE                           │
-└─────────────────────────────────────────────────────────────────────────────┘
-  [ Voice / Hinglish Donor Input ] 
-                 │
-                 ▼
-  [ AI Parser & Extraction Engine ] ──► (Diet, Servings, Gate, Spoilage Expiry)
-                 │
-                 ▼
-  [ Google Maps Dispatch Radar ]   ──► (Live GPS, Mumbai Locality Presets, Distance)
-                 │
-                 ▼
-  [ Multi-Factor NGO Matcher ]     ──► (Proximity, Capacity, Fleet, Veg/Non-Veg)
-                 │
-                 ▼
-  [ 1-Click WhatsApp Driver Link ] ──► (Instant Dispatch to Electric Vans/Trucks)
-                 │
-                 ▼
-  [ Live Mission Command Board ]   ──► (Ticking Countdown Timers & State Transitions)
-```
-
-### 1. Rushed Donor Intake Terminal
-- **Hurried Hinglish / English NLP Engine:** Banqueters and caterers can type or paste messy messages without any rigid formatting:
-  > *"4 handi chicken biryani aur dal bacha hai at Grand Banquet Kandivali, 150-180 people, gate 3 near kitchen loading dock, safe till 1:30 AM. Call Chef Ramesh 9820198201"*
-- **Hands-Free Voice Dictation (Web Speech API):** Live microphone capture with speech recognition (`webkitSpeechRecognition`), animated audio waveforms, and instant transcription for rapid hands-free entry in busy kitchens.
-- **One-Click Mumbai Banquet Presets:**
-  - *Preset 1 (Kandivali Wedding):* Hinglish Non-Veg Chicken Biryani & Dal feast.
-  - *Preset 2 (BKC Corporate Gala):* English Pure-Veg Deluxe Buffet (Paneer Lababdar, Dal Makhani, Jeera Rice).
-  - *Preset 3 (Borivali Sangeet):* Urgent mixed feast under 40 minutes remaining.
-
-### 2. AI Extraction & Donor Confirmation Card
-- **Instant Parameter Extraction:**
-  - **Diet & Category:** Categorized into `Veg`, `Non-Veg`, or `Mixed`.
-  - **Servings Estimation:** Automatically computes meal count from handis, containers, trays, or headcounts.
-  - **Logistical Clearance:** Identifies exact pickup gates, loading ramps, and kitchen contact persons with phone numbers.
-  - **Safe-Until Window:** Computes safety window with a real-time ticking countdown clock.
-  - **Driver Handling Instructions:** Recommends thermal containers, insulated bags, and vehicle types.
-- **One-Click Confirmation:** Generates an active rescue mission with audio chords and celebration confetti (`canvas-confetti`).
-
-### 3. Google Maps Dispatch Radar & Mumbai Geolocation Routing
-- **Interactive Radar Visualization:**
-  - Radial concentric range rings (2 km, 5 km, 10 km) with animated cyber radar sweeps.
-  - Real-time location marker showing the donor's banquet location in Mumbai.
-  - Interactive NGO fleet pins with status, distance in kilometers, and estimated drive time.
-- **Live Device Geolocation (`navigator.geolocation`):**
-  - One-tap device GPS lock with automatic latitude/longitude acquisition.
-  - Reverse geocoding of coordinates into Mumbai street addresses.
-- **Mumbai Locality Quick-Switcher:**
-  - Instant preset coordinates for major banquet hubs: *Kandivali West, BKC G-Block, Borivali West, Andheri West, Bandra West, Powai, Dadar, and Colaba*.
-- **Google Maps Navigation Integration:**
-  - Generates direct Google Maps turn-by-turn navigation URLs (`https://www.google.com/maps/dir/?api=1&...`) for drivers.
-  - Computes driving distance and ETA using coordinates and road curvature heuristics.
-
-### 4. Intelligent NGO Matching & WhatsApp 1-Click Dispatch
-- **Multi-Factor Ranking Algorithm:**
-  - **Proximity:** Evaluates nearest response vehicles within response radius.
-  - **Serving Capacity:** Matches batch size with shelter distribution limits.
-  - **Fleet Readiness:** Evaluates transport capability (Electric Insulated Vans, Refrigerated Trucks, Two-Wheeler Quick Response).
-  - **Dietary Strictness:** Ensures non-veg food is never routed to pure-vegetarian shelters.
-- **Instant WhatsApp Dispatch Payload:**
-  - Generates pre-formatted WhatsApp deep links (`https://api.whatsapp.com/send?phone=...`) ready to send directly to fleet coordinators:
-    ```
-    🚨 EMERGENCY FOOD RESCUE DISPATCH #MUM-2026-884
-    📍 Pickup: Grand Royal Palace, Link Road, Andheri West
-    🚪 Gate/Dock: Kitchen Gate 4 (Basement ramp)
-    🍲 Food: 220-250 Servings (Chicken Biryani & Mixed Starters)
-    ⏳ SAFE UNTIL: 01:15 AM (38m remaining - CRITICAL)
-    👤 Contact: Banquet Manager Suresh (9820198201)
-    🗺️ Route: https://www.google.com/maps/dir/?api=1&destination=19.1363,72.8277
-    ```
-
-### 5. Live Rescue Mission Board & Status Lifecycle
-- **Real-Time Ticking Countdowns:** Independent second-by-second countdown timers on every mission.
-- **Dynamic Threat Level Alerts:**
-  - 🟢 **Safe (> 2 hrs):** Emerald indicator, calm delivery window.
-  - 🟡 **Warning (< 2 hrs):** Amber indicator, priority dispatch needed.
-  - 🔴 **Critical (< 45 mins):** Pulsing red emergency alert, highest fleet priority.
-  - ⚫ **Expired:** Marked as spoiled/expired to ensure food safety compliance.
-- **Interactive Lifecycle Progression:**
-  - `Accept / Claim Mission` ➔ `Mark as Picked Up` ➔ `Complete Delivery`.
-
-### 6. Impact Analytics & Telemetry Dashboard
-- Real-time performance indicators:
-  - **Total Servings Rescued:** Live cumulative counter (14,850+ meals).
-  - **Average Response Latency:** Rapid response tracking (~14.2 minutes).
-  - **Active Emergency Rescues:** Real-time active mission counter.
-  - **Critical Missions (<45m):** High-priority triage indicator.
-  - **Estimated Carbon Offset:** Environmental savings from avoided organic landfill methane emissions.
-
-### 7. Cyber-Slate Aesthetic & Procedural Web Audio Engine
-- **Visual Design:** High-contrast Dark Cyber UI (`slate-950`), glowing emerald/amber status accents, scanline overlays, and responsive mobile-first grid.
-- **Native Web Audio Synthesizer:** Pure procedural audio generated directly via the browser's `AudioContext` without requiring external sound files:
-  - Radar sweep pings
-  - Mission accepted harmonic chords
-  - Critical timer warning beeps
-  - Confetti burst fanfare
-
----
-
-## 📂 Project Directory Structure
-
-```
-Annadaata AI/
-├── index.html                   # HTML entry point with dark cyber viewport meta
-├── package.json                 # Dependencies & scripts
-├── tsconfig.json                # TypeScript compiler configuration
-├── vite.config.ts               # Vite configuration (port 3000, React plugin)
-├── tailwind.config.js           # Cyber theme colors (emerald, amber, cyan, slate)
-├── postcss.config.js            # PostCSS configuration
-│
-├── src/
-│   ├── main.tsx                 # React application bootstrapper
-│   ├── App.jsx                  # Main application orchestrator & tab controller
-│   ├── index.css                # Custom cyber CSS variables & radar animations
-│   │
-│   ├── components/
-│   │   ├── DonorInputPanel.tsx             # Voice/text intake & banquet scenario presets
-│   │   ├── ExtractionConfirmationCard.tsx  # Extracted parameters & mission trigger
-│   │   ├── GoogleMapDispatchRadar.tsx      # Interactive radar, GPS locator & Mumbai map
-│   │   ├── NGOMatchingGrid.tsx             # Ranked NGO cards & 1-click WhatsApp dispatch
-│   │   ├── LiveRescueBoard.tsx             # Active missions, status lifecycle & timers
-│   │   └── Header.tsx                      # Top bar with cyber telemetry & audio toggle
-│   │
-│   ├── utils/
-│   │   ├── aiParser.ts          # Natural language extraction & food safety parser
-│   │   ├── googleMapsService.ts # Geolocation, reverse geocoding & route calculations
-│   │   ├── ngoMatcher.ts        # NGO scoring algorithm & WhatsApp payload generator
-│   │   ├── soundEffects.ts      # Native Web Audio API procedural sound synthesizer
-│   │   └── confetti.ts          # Celebration particle effects
-│   │
-│   ├── data/
-│   │   └── mockData.ts          # Verified Mumbai NGOs, preset scenarios & seed missions
-│   │
-│   └── types/
-│       └── index.ts             # TypeScript interfaces (Missions, NGOs, ExtractionResult)
-```
-
----
-
-## 🛠️ Tech Stack & Libraries
-
-| Technology | Purpose |
-| :--- | :--- |
-| **React 18** | High-performance reactive UI rendering |
-| **TypeScript 5.7** | Type safety across mission states, coordinates, and NGO schemas |
-| **Vite 6** | Ultra-fast build tool and development server |
-| **Tailwind CSS 3.4** | Modern dark-mode utility-first styling |
-| **Lucide React** | Clean, minimalist cyber UI icons |
-| **Canvas Confetti** | Confetti celebration on mission confirmation |
-| **Web Audio API** | Zero-latency procedural audio synthesis |
-| **Web Speech API** | In-browser speech-to-text voice recognition |
-| **Google Maps API Helpers** | Geolocation, distance matrix, and directions deep linking |
-
----
-
-## 💻 Getting Started Locally
-
-### Prerequisites
-- Node.js (v18.0.0 or higher recommended)
-- npm or yarn
-
-### Installation & Run
+## Prerequisites & Installation
 
 ```bash
-# 1. Clone the repository
+# 1. Clone repository
 git clone https://github.com/jashsampat1-hub/annadaata-ai.git
-cd annadaata-ai
+cd "Annadaata AI"
 
-# 2. Install dependencies (already committed in repo for offline reproducibility)
+# 2. Install dependencies
 npm install
 
-# 3. Launch development server
+# 3. Environment variables
+# Optional: Add custom Google Maps API key if replacing default heuristics
+# VITE_GOOGLE_MAPS_API_KEY=your_key_here
+
+# 4. Run development server
 npm run dev
-
-# 4. Open in browser
-http://localhost:3000
 ```
 
-### Production Build
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-```bash
-# Type check and build optimized bundle
-npm run build
-
-# Preview production build locally
-npm run preview
-```
-
----
-
-## 🤝 Verified NGO Partner Network (Mumbai Pilot)
-
-- **Roti Bank Mumbai Central** — Rapid Night Response Fleet (Electric Insulated Vans)
-- **Annamrita Foundation Hub** — Mega Kitchen Distribution Network (Refrigerated Trucks)
-- **Khaana Chahiye Emergency Response** — Western Express Corridor Fleet
-- **Robin Hood Army (Andheri/Bandra Chapter)** — Night Volunteer Network (Insulated Cargo)
-- **No Food Waste Foundation** — South & Central Mumbai Logistics
-
----
-
-## 📄 License
-
-This project is open-source and dedicated to eliminating midnight food waste across urban communities.
+## Participant Info
+- **Name:** Jash Sampat
+- **College ID:** [Your ID]
+- **Day:** Day 2 (30th)
