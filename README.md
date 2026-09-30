@@ -21,8 +21,8 @@ Cooked food stays safe for only a few hours, so each listing has a deadline and 
 ## Core AI Architecture
 - **Model / Service:**
   - **Natural Language Parsing Engine (`aiParser.ts`):** Context-aware heuristic and semantic NLP parser capable of handling rushed multi-lingual (Hinglish/English) expressions, kitchen units (handis, trays, kg, headcounts), and colloquial time references ("safe till 1:30 AM", "only 40 mins left").
-  - **Voice Capture Service (`Web Speech API`):** In-browser speech-to-text dictation using `webkitSpeechRecognition` with dynamic waveform animations for hands-free intake in busy banquet kitchens.
-  - **Geolocation & Route Service (`googleMapsService.ts`):** Geocoding, reverse geocoding, distance matrix algorithms, and Google Maps Navigation deep-link generators.
+  - **Voice Capture Service (`Web Speech API`):** In-browser speech-to-text dictation using `webkitSpeechRecognition` with dynamic waveform animations for hands-free intake in busy banquet kitchens (runs client-side, zero latency, zero API key required).
+  - **Geolocation & Route Service (`googleMapsService.ts`):** OpenStreetMap / Photon Geocoding API (`photon.komoot.io`) for high-speed Indian address geocoding, plus Google Maps Directions API deep-link integration.
   - **Procedural Synthesizer (`Web Audio API`):** Zero-latency browser audio synthesis for cyber radar sweeps, critical countdown alerts, and confirmation chords.
 
 - **Workflow:**
@@ -39,6 +39,18 @@ Cooked food stays safe for only a few hours, so each listing has a deadline and 
   - **GPS Fallback Presets:** If browser location access is denied, smoothly falls back to verified Mumbai banquet cluster presets (Kandivali, BKC, Borivali, Andheri, Bandra, Powai, Dadar, Colaba).
   - **Speech Error Recovery:** Catches microphone permission denials and unsupported browser environments with clear text-based fallback alerts.
 
+## API Keys & Integrations
+
+The platform is designed to be instantly usable out-of-the-box using native browser APIs and open endpoints, while also supporting optional cloud API keys:
+
+| API / Service | Key Name | Purpose | Required / Default |
+| :--- | :--- | :--- | :--- |
+| **Google Gemini API** | `GEMINI_API_KEY` / `VITE_GEMINI_API_KEY` | Optional cloud LLM inference for extended multi-lingual reasoning | *Optional* (In-app AI parser runs client-side by default) |
+| **Google Maps Platform** | `VITE_GOOGLE_MAPS_API_KEY` | Google Maps JavaScript SDK & custom vector tiles | *Optional* (Dynamic radar & directions URLs work without keys) |
+| **Photon Geocoding API** | *(No key needed)* | Free Indian address geocoding & reverse geocoding via OpenStreetMap | *Built-in / Zero Config* |
+| **Web Speech API** | *(Browser Native)* | Real-time speech-to-text voice dictation | *Built-in / Zero Config* |
+| **Web Audio API** | *(Browser Native)* | Synthetic procedural audio radar pings & emergency countdown alarms | *Built-in / Zero Config* |
+
 ## Prerequisites & Installation
 
 ```bash
@@ -50,8 +62,12 @@ cd "Annadaata AI"
 npm install
 
 # 3. Environment variables
-# Optional: Add custom Google Maps API key if replacing default heuristics
-# VITE_GOOGLE_MAPS_API_KEY=your_key_here
+# Copy template and add optional keys to .env.local:
+cp .env.example .env.local
+
+# In .env.local:
+# GEMINI_API_KEY=your_gemini_api_key_here
+# VITE_GOOGLE_MAPS_API_KEY=your_google_maps_key_here
 
 # 4. Run development server
 npm run dev
