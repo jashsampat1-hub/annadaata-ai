@@ -1,4 +1,5 @@
 import { RescueMission, NGOProfile, ExtractionResult } from '../types';
+import { formatSafeUntilDisplay } from '../utils/aiParser';
 
 export const INITIAL_STATS = {
   activeRescues: 3,
@@ -135,6 +136,9 @@ export const INITIAL_NGOS: NGOProfile[] = [
 // Helper to generate dynamic timestamps relative to current session
 export const getInitialRescueMissions = (): RescueMission[] => {
   const now = Date.now();
+  const m1Timestamp = now + 38 * 60 * 1000 + 15 * 1000; // 38 mins remaining → CRITICAL
+  const m2Timestamp = now + 74 * 60 * 1000 + 40 * 1000; // 74 mins → AMBER
+  const m3Timestamp = now + 165 * 60 * 1000;            // 2h 45m → NORMAL EMERALD
 
   return [
     {
@@ -150,8 +154,8 @@ export const getInitialRescueMissions = (): RescueMission[] => {
       foodItems: ['Paneer Lababdar (2 Handis)', 'Dal Makhani (3 Warmers)', 'Jeera Rice & Tandoori Rotis'],
       servings: 240,
       containersDescription: '5 Heavy Warmers / Handis, approx 240 portions',
-      safeUntil: 'Safe till 12:35 AM',
-      safeUntilTimestamp: now + 38 * 60 * 1000 + 15 * 1000, // 38 mins remaining → CRITICAL
+      safeUntil: formatSafeUntilDisplay(m1Timestamp, 38),
+      safeUntilTimestamp: m1Timestamp,
       status: 'Available',
       driverInstructions: 'Driver Instructions: Food is packed in hot cauldrons. Bring 4 insulated food grade tubs. Enter through Gate 3 service ramp, ask for Chef Mohan.',
       createdAt: '22m ago',
@@ -170,8 +174,8 @@ export const getInitialRescueMissions = (): RescueMission[] => {
       foodItems: ['Chicken Dum Biryani (4 Large Handis)', 'Mutton Rogan Josh', 'Rumali Roti & Mirchi Ka Salan'],
       servings: 180,
       containersDescription: '4 Sealed copper-finish Handis + 2 large gravies',
-      safeUntil: 'Safe till 1:15 AM',
-      safeUntilTimestamp: now + 74 * 60 * 1000 + 40 * 1000, // 74 mins → AMBER
+      safeUntil: formatSafeUntilDisplay(m2Timestamp, 74),
+      safeUntilTimestamp: m2Timestamp,
       status: 'Claimed',
       claimedByNGO: {
         id: 'ngo-1',
@@ -199,8 +203,8 @@ export const getInitialRescueMissions = (): RescueMission[] => {
       foodItems: ['Vegetable Pulao (3 Degchas)', 'Kadai Vegetable', 'Gulab Jamun (2 Tubs)', 'Raita & Papad'],
       servings: 350,
       containersDescription: '3 Large Degchas + 2 Stainless Steel Tubs',
-      safeUntil: 'Safe till 2:30 AM',
-      safeUntilTimestamp: now + 165 * 60 * 1000, // 2h 45m → NORMAL EMERALD
+      safeUntil: formatSafeUntilDisplay(m3Timestamp, 165),
+      safeUntilTimestamp: m3Timestamp,
       status: 'Available',
       driverInstructions: 'Driver Instructions: Enter via Carter road service lane. Ample parking for van. Contact Zaid at security desk.',
       createdAt: '10m ago',
@@ -208,6 +212,9 @@ export const getInitialRescueMissions = (): RescueMission[] => {
     }
   ];
 };
+
+const initialPreviewMins = 75;
+const initialPreviewTimestamp = Date.now() + initialPreviewMins * 60 * 1000;
 
 export const INITIAL_EXTRACTION_PREVIEW: ExtractionResult = {
   foodType: 'Chicken Dum Biryani & Dal / Tadka',
@@ -220,9 +227,9 @@ export const INITIAL_EXTRACTION_PREVIEW: ExtractionResult = {
   pickupGate: 'Gate 3 - Kitchen Loading Dock',
   contactPerson: 'Chef Ramesh',
   contactPhone: '9820198201',
-  safeUntilTime: 'Safe till 1:30 AM',
-  safeUntilTimestamp: Date.now() + 95 * 60 * 1000,
-  minutesRemaining: 95,
+  safeUntilTime: formatSafeUntilDisplay(initialPreviewTimestamp, initialPreviewMins),
+  safeUntilTimestamp: initialPreviewTimestamp,
+  minutesRemaining: initialPreviewMins,
   packagingNotes: 'Non-Veg preparation. Requires separate heavy-duty hot canisters to prevent spillage.',
   driverInstructions: 'Driver Instructions: Bring 4 large insulated canisters. Reach Gate 3 - Kitchen Loading Dock at Grand Banquet & Lawns, Link Road, Kandivali West, Mumbai. Coordinate with Grand Royal Banquets & Hospitality staff (Contact: Chef Ramesh 9820198201) at loading ramp.',
   donorOrg: 'Grand Royal Banquets & Hospitality',

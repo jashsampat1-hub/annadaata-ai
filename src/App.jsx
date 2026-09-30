@@ -1297,6 +1297,10 @@ export default function App() {
                 <div className="text-[10px] text-emerald-400">
                   {currentExtraction.contactPhone}
                 </div>
+                <div className="pt-1 border-t border-[#1e293b] flex items-center gap-1 text-[10px] text-amber-300 truncate">
+                  <Clock className="w-3 h-3 text-amber-400 shrink-0" />
+                  <span className="truncate">{currentExtraction.safeUntilTime}</span>
+                </div>
               </div>
             </div>
 
@@ -1631,7 +1635,7 @@ export default function App() {
                       </div>
 
                       {/* Real-time Ticking Countdown Window */}
-                      <div className={`p-2.5 rounded-lg border font-mono text-xs flex items-center justify-between mb-3 ${
+                      <div className={`p-2.5 rounded-lg border font-mono text-xs flex items-center justify-between mb-1.5 ${
                         isExpired
                           ? 'bg-slate-900 border-slate-700 text-slate-500'
                           : isCritical
@@ -1651,6 +1655,15 @@ export default function App() {
                             `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} ${isCritical ? '(CRITICAL)' : isAmber ? '(URGENT)' : '(OPTIMAL)'}`
                           )}
                         </div>
+                      </div>
+
+                      {/* Synchronized Food Safety Deadline */}
+                      <div className="text-[10px] font-mono text-slate-400 mb-3 flex items-center justify-between px-1">
+                        <span className="flex items-center gap-1.5 truncate">
+                          <span className="text-slate-500">Deadline:</span>
+                          <span className="text-amber-300 font-semibold">{mission.safeUntil}</span>
+                        </span>
+                        <span className="text-[10px] text-slate-500 shrink-0 font-sans">FSSAI Safe</span>
                       </div>
 
                       {/* AI-Written Pickup Message box on claimed cards */}

@@ -253,7 +253,7 @@ export const LiveRescueBoard: React.FC<LiveRescueBoardProps> = ({
                 </div>
 
                 {/* Real-time Ticking Spoilage Countdown Timer */}
-                <div className={`p-3 rounded-xl border flex items-center justify-between mb-4 font-mono ${timerBoxClasses}`}>
+                <div className={`p-3 rounded-xl border flex items-center justify-between mb-2 font-mono ${timerBoxClasses}`}>
                   <div className="flex items-center gap-2">
                     <Clock className={`w-4 h-4 ${isCritical ? 'animate-spin text-rose-400' : 'text-amber-400'}`} />
                     <span className="text-xs uppercase font-sans tracking-wide">
@@ -272,6 +272,15 @@ export const LiveRescueBoard: React.FC<LiveRescueBoardProps> = ({
                       </>
                     )}
                   </div>
+                </div>
+
+                {/* Synchronized Food Safety Deadline Telemetry */}
+                <div className="text-[11px] font-mono text-slate-400 mb-3.5 flex items-center justify-between px-1">
+                  <span className="flex items-center gap-1.5 truncate">
+                    <span className="text-slate-500">Deadline:</span>
+                    <span className="text-amber-300 font-semibold">{mission.safeUntil}</span>
+                  </span>
+                  <span className="text-[10px] text-slate-500 shrink-0 font-sans">FSSAI Hot Safe</span>
                 </div>
 
                 {/* DEDICATED AI-WRITTEN PICKUP MESSAGE BOX ON CLAIMED CARDS */}

@@ -460,7 +460,7 @@ export default function GoogleMapDispatchRadar({
                 <span className="text-xs text-slate-400">MINS</span>
               </div>
               <div className="text-[10px] text-slate-400">
-                {activeMetric.prepMinutes}m loading + {activeMetric.transitMinutes}m transit
+                Direct driving transit time (Google Maps)
               </div>
             </div>
 
